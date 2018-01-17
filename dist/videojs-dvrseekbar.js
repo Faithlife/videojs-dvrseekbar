@@ -136,7 +136,7 @@ var onPlayerReady = function onPlayerReady(player, options) {
 
   btnLiveEl.className = 'vjs-live-button vjs-control';
 
-  newLink.innerHTML = document.getElementsByClassName('vjs-live-display')[0].innerHTML;
+  newLink.innerHTML = document.getElementById(player.id_).getElementsByClassName('vjs-live-display')[0].innerHTML;
   newLink.id = 'liveButton';
 
   if (!player.paused()) {
@@ -161,8 +161,8 @@ var onPlayerReady = function onPlayerReady(player, options) {
 
   btnLiveEl.appendChild(newLink);
 
-  var controlBar = document.getElementsByClassName('vjs-control-bar')[0];
-  var insertBeforeNode = document.getElementsByClassName('vjs-progress-control')[0];
+  var controlBar = document.getElementById(player.id_).getElementsByClassName('vjs-control-bar')[0];
+  var insertBeforeNode = document.getElementById(player.id_).getElementsByClassName('vjs-progress-control')[0];
 
   controlBar.insertBefore(btnLiveEl, insertBeforeNode);
 
@@ -228,7 +228,10 @@ var dvrseekbar = function dvrseekbar(options) {
 };
 
 // Register the plugin with video.js.
-_videoJs2['default'].plugin('dvrseekbar', dvrseekbar);
+// Updated for video.js 6 - https://github.com/videojs/video.js/wiki/Video.js-6-Migration-Guide
+var registerPlugin = _videoJs2['default'].registerPlugin || _videoJs2['default'].plugin;
+
+registerPlugin('dvrseekbar', dvrseekbar);
 
 // Include the version number.
 dvrseekbar.VERSION = '0.2.6';
